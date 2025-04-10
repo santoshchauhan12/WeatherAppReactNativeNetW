@@ -1,0 +1,72 @@
+import { createAsyncThunk,
+    createSlice
+ } from "@reduxjs/toolkit";
+
+import axios from "axios";
+import { API_KEY, GET_WEATHER_API } from "../const/ApiConstant";
+import { weatherInitialState } from "../states/WeatherState";
+import { ResponseState } from "../states/WeatherState";
+
+/**
+ * Thunk middleware and axios to call api,
+ * @param search based on city
+ */
+export const fetchWeatherData = createAsyncThunk("async/state", 
+    async(search: string, {rejectWithValue}) => {
+
+        try {
+
+            const result = await axios.get(GET_WEATHER_API, {
+                params : {
+                    q : search,
+                    appId : API_KEY
+                }
+            })
+            const responseData = await result.data
+
+            console.log("response is ============= ", responseData)
+            return responseData
+        }catch(error: unknown) {
+            console.log("response is on error ======= ", error)
+
+
+            if(axios.isAxiosError(error)) {
+                return rejectWithValue(error.message)
+            } else {
+                return rejectWithValue("unknown error")
+            }
+        }
+})
+
+/**
+ * Weather slice to manager reducer and state
+ */
+export const fetchWeatherSlice = createSlice({
+    name: "WeatherSlice",
+    initialState: weatherInitialState,
+    reducers: {},
+
+    extraReducers: (builder) => {
+
+        builder.addCase(fetchWeatherData.pending, (state) => {
+
+            state.status = ResponseState.Loading
+        })
+
+        builder.addCase(fetchWeatherData.fulfilled, (state, action)=> {
+            state.status = ResponseState.Success
+            state.weather = action.payload
+            state.error = ""
+        })
+
+        builder.addCase(fetchWeatherData.rejected, (state, action)=> {
+            state.status = ResponseState.Failed
+            state.error = typeof action.payload == "string" ? action.payload : "unknown error"
+        })
+    }
+}
+
+)
+
+
+export default fetchWeatherSlice.reducer
