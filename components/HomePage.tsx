@@ -4,10 +4,11 @@ import { RootState } from '../Store/WeatherStore';
 import { fetchWeatherData } from '../redux/FetchWeather';
 import React, { useEffect, Dispatch, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from "react-native-vector-icons/Ionicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import { useTheme } from '../hooks/ThemeContext';
+import { Switch } from 'react-native';
 
 
 import {
@@ -25,10 +26,16 @@ import {
 import { ResponseState } from '../states/WeatherState';
 import { getGradientForWeatherBackground, getWeatherIcon } from '../helpers/weatherHelper';
 import { WeatherCardReport } from './WeatherCardReport';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LAST_SEARCHED_CITY } from '../const/StorageConstants';
+import { ErrorPlaceholder } from './ErrorPlaceholder';
+import { WeatherPlaceHolder } from './WeatherPlaceholder';
 
 
 
 export const HomePage = () => {
+    const { theme, toggleTheme } = useTheme();
+    const isDarkMode = theme === 'dark';
     const weatherDispatch = useDispatch<AppDispatch>()
 
     const { weather, status, error } = useSelector((state: RootState) => state.weatherReducerState)
@@ -38,14 +45,19 @@ export const HomePage = () => {
     const [searchInput, setSearchInput] = useState("")
     const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+    const [lastSearchedCity, setLastSearchedCity] = useState('');
 
-    useEffect(() => {
-        weatherDispatch(fetchWeatherData("raipur"))
-    }, [])
+    // useEffect(() => {
+    //     weatherDispatch(fetchWeatherData("raipur"))
+    // }, [])
 
     function onInputChange(value: string) {
 
         setSearchInput(value)
+    }
+
+    const saveSearchedCity = async (searchCity: string) => {
+        await AsyncStorage.setItem(LAST_SEARCHED_CITY, searchCity);
     }
 
     useEffect(() => {
@@ -58,26 +70,88 @@ export const HomePage = () => {
 
             if (searchInput != "") {
                 weatherDispatch(fetchWeatherData(searchInput))
+                saveSearchedCity(searchInput)
             }
         }, 2000)
 
         return () => clearTimeout(searchTimer.current!);
     }, [searchInput])
 
+    useEffect(() => {
+        const getLastSearchedCity = async () => {
+            const city = await AsyncStorage.getItem(LAST_SEARCHED_CITY);
+            if (city) {
+                setLastSearchedCity(city);
+                weatherDispatch(fetchWeatherData(city));
+            }
+        };
+        getLastSearchedCity();
+    }, []);
+
     const weatherMain = weather?.weather?.[0]?.main?.toLowerCase();
+
+    const styles =  StyleSheet.create({
+        mainContainer: {
+            flex: 1,
+            backgroundColor: isDarkMode ? "#0f172a" : "#f3f4f6",
+        },
+
+        cardContainer: {
+            flex: 1,
+        },
+        container: {
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "pink"
+        },
+
+        topBar: {
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            backgroundColor: "blue"
+        },
+        title: {
+            fontSize: 26,
+            fontWeight: "600",
+            color: "black",
+            backgroundColor: "blue"
+        },
+
+        searchBox: {
+            marginTop: 10,
+            backgroundColor: "#fff",
+            borderRadius: 10,
+            paddingHorizontal: 10,
+            paddingVertical: 5,
+            elevation: 2,
+        },
+        input: {
+            height: 40,
+            fontSize: 16,
+        },
+    })
 
 
     return (
 
-        <View >
+        <View style={styles.mainContainer}>
             <View style={styles.topBar}>
                 <Text style={styles.title}>Weather</Text>
                 <TouchableOpacity onPress={() => setSearchVisible(!searchVisible)}>
                     <Ionicons name="search-outline" size={50} color="#000" />
                 </TouchableOpacity>
+                <Switch
+                    value={isDarkMode}
+                    onValueChange={toggleTheme}
+                    thumbColor={isDarkMode ? "#facc15" : "#0f172a"}
+                    trackColor={{ false: "#ccc", true: "#334155" }}
+                />
             </View>
 
-            <View>
+
+            <View style={styles.cardContainer}>
                 {searchVisible && (
                     <View style={styles.searchBox}>
                         <TextInput
@@ -88,81 +162,24 @@ export const HomePage = () => {
                         />
                     </View>
                 )}
-                {status === ResponseState.Loading ? (
-                    <ActivityIndicator size="large" color="#007BFF" style={{ marginTop: 50 }} />
-                ) : error ? (
-                    <Text style={styles.errorText}>Error: {error}</Text>
-                ) : (
-                    <>
-                        {weather && <WeatherCardReport weather={weather} />}
+                <View style={styles.container}>
+                    {lastSearchedCity == "" && !weather && <WeatherPlaceHolder />}
 
-                    </>
-                )}
+                    {status === ResponseState.Loading ? (
+                        <ActivityIndicator size="large" color="#007BFF" style={{ marginTop: 50 }} />
+                    ) : error ? (
+                        <ErrorPlaceholder />
+                        // <Text style={styles.errorText}>Error: {error}</Text>
+
+                    ) : (
+                        <>
+                            {weather && <WeatherCardReport weather={weather} />}
+
+                        </>
+                    )}
+                </View>
+
             </View>
         </View >
     )
-
 }
-
-const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        backgroundColor: "black"
-    },
-    container: {
-        flex: 1,
-        padding: 20,
-        alignItems: "center",
-        backgroundColor: "#F3F4F6",
-        justifyContent: "space-around",
-    },
-
-    topBar: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: "blue"
-    },
-    title: {
-        fontSize: 26,
-        fontWeight: "600",
-        color: "black",
-        backgroundColor: "blue"
-    },
-
-    searchBox: {
-        marginTop: 10,
-        backgroundColor: "#fff",
-        borderRadius: 10,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        elevation: 2,
-    },
-    input: {
-        height: 40,
-        fontSize: 16,
-    },
-    weatherImage: {
-        width: 150,
-        height: 150,
-        alignSelf: "center",
-        marginVertical: 20,
-    },
-    tempText: {
-        fontSize: 30,
-        textAlign: "center",
-        fontWeight: "bold",
-    },
-    cityText: {
-        textAlign: "center",
-        fontSize: 20,
-        fontWeight: "500",
-        marginTop: 20,
-    },
-    errorText: {
-        color: "red",
-        textAlign: "center",
-        marginTop: 40,
-    },
-
-})

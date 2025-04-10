@@ -18,5 +18,5 @@ export enum ResponseState {
 export const weatherInitialState: WeatherState = {
     weather: null,
     status: ResponseState.Idle,
-    error: "unknown error"
+    error: ""
 }

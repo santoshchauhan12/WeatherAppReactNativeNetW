@@ -1,0 +1,2 @@
+
+export const LAST_SEARCHED_CITY = "LAST_SEARCHED_CITY"

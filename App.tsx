@@ -56,13 +56,13 @@ function App(): React.JSX.Element {
   return (
 
     <Provider store={weatherStore} >
-      <View >
+      <View style= {styles.appContainer}>
         {/* <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         /> */}
 
-        <View>
+        <View style= {styles.appContainer}>
           <HomePage />
         </View>
 
@@ -72,6 +72,11 @@ function App(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
+
+  appContainer: {
+    flex:1,
+    backgroundColor: "green"
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
