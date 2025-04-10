@@ -2,7 +2,7 @@ import { WeatherResponse } from "../models/WeatherModel"
 
 
 export type WeatherState = {
-    weather: Partial<WeatherResponse>,
+    weather: WeatherResponse | null,
     status: ResponseState,
     error: string
 }
@@ -16,7 +16,7 @@ export enum ResponseState {
 }
 
 export const weatherInitialState: WeatherState = {
-    weather: {},
+    weather: null,
     status: ResponseState.Idle,
     error: "unknown error"
 }

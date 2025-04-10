@@ -56,11 +56,11 @@ function App(): React.JSX.Element {
   return (
 
     <Provider store={weatherStore} >
-      <View style={backgroundStyle}>
-        <StatusBar
+      <View >
+        {/* <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
-        />
+        /> */}
 
         <View>
           <HomePage />

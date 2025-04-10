@@ -13,6 +13,7 @@ import { ResponseState } from "../states/WeatherState";
  */
 export const fetchWeatherData = createAsyncThunk("async/state", 
     async(search: string, {rejectWithValue}) => {
+        console.log("query weather data  ============= ", search)
 
         try {
 
