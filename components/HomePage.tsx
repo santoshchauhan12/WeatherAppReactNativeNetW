@@ -46,15 +46,22 @@ export const HomePage = () => {
         ? require('../assets/dark_mode_bg.jpg')
         : require('../assets/light_mode_bg.jpg');
 
+        
     function onInputChange(value: string) {
-
         setSearchInput(value)
     }
 
+    /**
+     * Save searched city to storage to persist even after app closing
+     * @param searchCity 
+     */
     const saveSearchedCity = async (searchCity: string) => {
         await AsyncStorage.setItem(LAST_SEARCHED_CITY, searchCity);
     }
 
+    /**
+     * debounce for calling the api based on search
+     */
     useEffect(() => {
 
         if (searchTimer.current) {
@@ -67,11 +74,14 @@ export const HomePage = () => {
                 weatherDispatch(fetchWeatherData(searchInput))
                 saveSearchedCity(searchInput)
             }
-        }, 2000)
+        }, 1500)
 
         return () => clearTimeout(searchTimer.current!);
     }, [searchInput])
 
+    /**
+     * Fetch last city search from async storage
+     */
     useEffect(() => {
         const getLastSearchedCity = async () => {
             const city = await AsyncStorage.getItem(LAST_SEARCHED_CITY);

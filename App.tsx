@@ -43,6 +43,7 @@ function App(): React.JSX.Element {
 
 
 
+
   /*
    * To keep the template simple and small we're adding padding to prevent view
    * from rendering under the System UI.
@@ -89,5 +90,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
+
 
 export default App;

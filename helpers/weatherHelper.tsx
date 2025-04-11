@@ -36,8 +36,6 @@ export const getWeatherCardColor = (weatherMain: string | undefined) => {
  * @returns 
  */
 export const getWeatherIcon = (weatherMain: string | undefined) => {
-    // if (!weatherMain) return "weather-sunny";
-
     switch (weatherMain) {
         case "clear":
             return "weather-sunny";
