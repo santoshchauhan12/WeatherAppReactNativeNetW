@@ -1,6 +1,6 @@
 Pull the code using:-
 
-git clone git clone https://github.com/santoshchauhan12/WeatherAppReactNativeNetW.git
+git clone https://github.com/santoshchauhan12/WeatherAppReactNativeNetW.git
 
 run the Android build using below command:-
 
