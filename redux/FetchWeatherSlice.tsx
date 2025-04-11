@@ -3,9 +3,11 @@ import { createAsyncThunk,
  } from "@reduxjs/toolkit";
 
 import axios from "axios";
-import { API_KEY, GET_WEATHER_API } from "../const/ApiConstant";
+import { GET_WEATHER_API } from "../const/ApiConstant";
 import { weatherInitialState } from "../states/WeatherState";
 import { ResponseState } from "../states/WeatherState";
+import { WEATHER_API_KEY } from '@env';
+
 
 /**
  * Thunk middleware and axios to call api,
@@ -13,14 +15,14 @@ import { ResponseState } from "../states/WeatherState";
  */
 export const fetchWeatherData = createAsyncThunk("async/state", 
     async(search: string, {rejectWithValue}) => {
-        console.log("query weather data  ============= ", search)
+        console.log("query weather data  =============   ", search)
 
         try {
 
             const result = await axios.get(GET_WEATHER_API, {
                 params : {
                     q : search,
-                    appId : API_KEY
+                    appId : WEATHER_API_KEY
                 }
             })
             const responseData = await result.data
