@@ -1,97 +1,17 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+Pull the code using:-
 
-# Getting Started
+git clone https://github.com/santoshchauhan12/WeatherAppReactNativeNetW.git
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+run the Android build using below command:-
 
-## Step 1: Start Metro
+npm run build:debug (this will generate a app-debug.apk folder inside android/app/build/output/debug folder)
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+![WhatsApp Image 2025-04-11 at 4 32 26 PM](https://github.com/user-attachments/assets/0446d0e5-d2e9-4667-9b6a-e17abf8fbc79)
+![WhatsApp Image 2025-04-11 at 4 32 26 PM (1)](https://github.com/user-attachments/assets/fa9f71da-1e69-4d31-bfc0-767f13a45b5b)
+![WhatsApp Image 2025-04-11 at 4 32 27 PM](https://github.com/user-attachments/assets/792b7101-2d46-439d-8f89-a1d7b9da8851)
+![WhatsApp Image 2025-04-11 at 4 32 23 PM](https://github.com/user-attachments/assets/0918c638-eba4-48c3-8ae4-dbb0d132941d)
+![WhatsApp Image 2025-04-11 at 4 32 24 PM](https://github.com/user-attachments/assets/43c6d6e1-2b71-447b-8d8d-138c048493c0)
+![WhatsApp Image 2025-04-11 at 4 32 24 PM (1)](https://github.com/user-attachments/assets/5e235900-9e9d-405c-9186-eb879c2cfb99)
+![WhatsApp Image 2025-04-11 at 4 32 25 PM](https://github.com/user-attachments/assets/915dd6e3-b639-41dc-a7de-e9e89d8a8e20)
+![WhatsApp Image 2025-04-11 at 4 32 25 PM (1)](https://github.com/user-attachments/assets/6cc2384e-aa2e-4efa-823d-88923d1c38b3)
