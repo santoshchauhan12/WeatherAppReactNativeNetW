@@ -1,7 +1,7 @@
 
 import { AppDispatch, weatherStore } from '../Store/WeatherStore';
 import { RootState } from '../Store/WeatherStore';
-import { fetchWeatherData } from '../redux/FetchWeather';
+import { fetchWeatherData } from '../redux/FetchWeatherSlice';
 import React, { useEffect, Dispatch, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -47,10 +47,6 @@ export const HomePage = () => {
 
     const [lastSearchedCity, setLastSearchedCity] = useState('');
 
-    // useEffect(() => {
-    //     weatherDispatch(fetchWeatherData("raipur"))
-    // }, [])
-
     function onInputChange(value: string) {
 
         setSearchInput(value)
@@ -90,7 +86,7 @@ export const HomePage = () => {
 
     const weatherMain = weather?.weather?.[0]?.main?.toLowerCase();
 
-    const styles =  StyleSheet.create({
+    const styles = StyleSheet.create({
         mainContainer: {
             flex: 1,
             backgroundColor: isDarkMode ? "#0f172a" : "#f3f4f6",
@@ -163,13 +159,16 @@ export const HomePage = () => {
                     </View>
                 )}
                 <View style={styles.container}>
-                    {lastSearchedCity == "" && !weather && <WeatherPlaceHolder />}
+
 
                     {status === ResponseState.Loading ? (
                         <ActivityIndicator size="large" color="#007BFF" style={{ marginTop: 50 }} />
                     ) : error ? (
                         <ErrorPlaceholder />
-                        // <Text style={styles.errorText}>Error: {error}</Text>
+
+                    ) : lastSearchedCity == "" && !weather ? (
+
+                        <WeatherPlaceHolder />
 
                     ) : (
                         <>

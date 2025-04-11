@@ -26,8 +26,9 @@ import {
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, weatherStore } from './Store/WeatherStore';
 import { RootState } from './Store/WeatherStore';
-import { fetchWeatherData } from './redux/FetchWeather';
+import { fetchWeatherData } from './redux/FetchWeatherSlice';
 import { HomePage } from './components/HomePage';
+import { ThemeProvider } from './hooks/ThemeContext';
 
 
 
@@ -56,17 +57,11 @@ function App(): React.JSX.Element {
   return (
 
     <Provider store={weatherStore} >
-      <View style= {styles.appContainer}>
-        {/* <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        /> */}
-
-        <View style= {styles.appContainer}>
-          <HomePage />
+      <ThemeProvider>
+        <View style={styles.appContainer}>
+            <HomePage />
         </View>
-
-      </View>
+      </ThemeProvider>
     </Provider>
   );
 }
@@ -74,7 +69,7 @@ function App(): React.JSX.Element {
 const styles = StyleSheet.create({
 
   appContainer: {
-    flex:1,
+    flex: 1,
     backgroundColor: "green"
   },
   sectionContainer: {
