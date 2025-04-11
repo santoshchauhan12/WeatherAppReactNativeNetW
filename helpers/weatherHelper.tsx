@@ -1,24 +1,40 @@
+import { useTheme } from "../hooks/ThemeContext";
 
-
+/**
+ * helper function to get different color based on the weather 
+ * @param weatherMain 
+ * @returns 
+ */
 export const getWeatherCardColor = (weatherMain: string | undefined) => {
+
+    const { theme, toggleTheme } = useTheme();
+    const isDarkMode = theme === 'dark';
+
     switch (weatherMain) {
         case "clear":
-            return "#FDB813"; // Sunny yellow
+            return isDarkMode ? "#FFD93D" : "#FDB813"; // Warm sun vs bright sun
         case "clouds":
-            return "#6C757D"; // Cloudy gray
+            return isDarkMode ? "#495057" : "#ADB5BD"; // Dark cloud vs light cloud
         case "rain":
         case "drizzle":
-            return "#4A90E2"; // Rainy blue
+            return isDarkMode ? "#1E3A8A" : "#4A90E2"; // Deeper blue for dark mode
         case "thunderstorm":
-            return "#2C3E50"; // Stormy dark
+            return isDarkMode ? "#0F172A" : "#2C3E50"; // Very dark stormy
         case "snow":
-            return "#00BCD4"; // Cool icy blue
+            return isDarkMode ? "#60A5FA" : "#00BCD4"; // Frosty blue variants
+        case "mist":
+        case "fog":
+            return isDarkMode ? "#6B7280" : "#CFD8DC"; // Soft grays
         default:
-            return "#95A5A6"; // Default cloudy gray
+            return isDarkMode ? "#374151" : "#95A5A6"; // Neutral fallback
     }
 };
 
-
+/**
+ * Helper function to get weather icon based on the weather condition
+ * @param weatherMain 
+ * @returns 
+ */
 export const getWeatherIcon = (weatherMain: string | undefined) => {
     // if (!weatherMain) return "weather-sunny";
 

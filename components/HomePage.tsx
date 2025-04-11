@@ -1,4 +1,3 @@
-
 import { AppDispatch, weatherStore } from '../Store/WeatherStore';
 import { RootState } from '../Store/WeatherStore';
 import { fetchWeatherData } from '../redux/FetchWeatherSlice';
@@ -8,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from '../hooks/ThemeContext';
-import { Switch } from 'react-native';
+import { ImageBackground, Switch } from 'react-native';
 
 
 import {
@@ -37,15 +36,15 @@ export const HomePage = () => {
     const { theme, toggleTheme } = useTheme();
     const isDarkMode = theme === 'dark';
     const weatherDispatch = useDispatch<AppDispatch>()
-
     const { weather, status, error } = useSelector((state: RootState) => state.weatherReducerState)
-
-
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchInput, setSearchInput] = useState("")
     const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
     const [lastSearchedCity, setLastSearchedCity] = useState('');
+
+    const backgroundImage = isDarkMode
+        ? require('../assets/dark_mode_bg.jpg')
+        : require('../assets/light_mode_bg.jpg');
 
     function onInputChange(value: string) {
 
@@ -88,8 +87,7 @@ export const HomePage = () => {
 
     const styles = StyleSheet.create({
         mainContainer: {
-            flex: 1,
-            backgroundColor: isDarkMode ? "#0f172a" : "#f3f4f6",
+            flex: 1
         },
 
         cardContainer: {
@@ -99,20 +97,26 @@ export const HomePage = () => {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "pink"
+        },
+
+        background: {
+            flex: 1,
+            resizeMode: 'cover',
         },
 
         topBar: {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            backgroundColor: "blue"
+            paddingTop: 10,
+            paddingBottom: 10,
+            backgroundColor: isDarkMode ? "#0f172a" : "#f3f4f6",
         },
         title: {
             fontSize: 26,
             fontWeight: "600",
-            color: "black",
-            backgroundColor: "blue"
+            color: isDarkMode ? "white" : "black",
+            backgroundColor: isDarkMode ? "#0f172a" : "#f3f4f6",
         },
 
         searchBox: {
@@ -123,6 +127,17 @@ export const HomePage = () => {
             paddingVertical: 5,
             elevation: 2,
         },
+
+        searchIcon: {
+            color: isDarkMode ? "white" : "black"
+        },
+
+        rightControls: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 12, 
+          },
+
         input: {
             height: 40,
             fontSize: 16,
@@ -132,53 +147,57 @@ export const HomePage = () => {
 
     return (
 
-        <View style={styles.mainContainer}>
-            <View style={styles.topBar}>
-                <Text style={styles.title}>Weather</Text>
-                <TouchableOpacity onPress={() => setSearchVisible(!searchVisible)}>
-                    <Ionicons name="search-outline" size={50} color="#000" />
-                </TouchableOpacity>
-                <Switch
-                    value={isDarkMode}
-                    onValueChange={toggleTheme}
-                    thumbColor={isDarkMode ? "#facc15" : "#0f172a"}
-                    trackColor={{ false: "#ccc", true: "#334155" }}
-                />
-            </View>
-
-
-            <View style={styles.cardContainer}>
-                {searchVisible && (
-                    <View style={styles.searchBox}>
-                        <TextInput
-                            placeholder="Enter city"
-                            value={searchInput}
-                            onChangeText={(textChange) => { onInputChange(textChange) }}
-                            style={styles.input}
+        <ImageBackground source={backgroundImage} style={styles.background}>
+            <View style={styles.mainContainer}>
+                <View style={styles.topBar}>
+                    <Text style={styles.title}>Weather</Text>
+                    <View style={styles.rightControls}>
+                        <TouchableOpacity onPress={() => setSearchVisible(!searchVisible)}>
+                            <Ionicons name="search-outline" size={30} style={styles.searchIcon} />
+                        </TouchableOpacity>
+                        <Switch
+                            value={isDarkMode}
+                            onValueChange={toggleTheme}
+                            thumbColor={isDarkMode ? "#facc15" : "#0f172a"}
+                            trackColor={{ false: "#ccc", true: "#334155" }}
                         />
                     </View>
-                )}
-                <View style={styles.container}>
-
-
-                    {status === ResponseState.Loading ? (
-                        <ActivityIndicator size="large" color="#007BFF" style={{ marginTop: 50 }} />
-                    ) : error ? (
-                        <ErrorPlaceholder />
-
-                    ) : lastSearchedCity == "" && !weather ? (
-
-                        <WeatherPlaceHolder />
-
-                    ) : (
-                        <>
-                            {weather && <WeatherCardReport weather={weather} />}
-
-                        </>
-                    )}
                 </View>
 
-            </View>
-        </View >
+
+                <View style={styles.cardContainer}>
+                    {searchVisible && (
+                        <View style={styles.searchBox}>
+                            <TextInput
+                                placeholder="Enter city"
+                                value={searchInput}
+                                onChangeText={(textChange) => { onInputChange(textChange) }}
+                                style={styles.input}
+                            />
+                        </View>
+                    )}
+                    <View style={styles.container}>
+
+
+                        {status === ResponseState.Loading ? (
+                            <ActivityIndicator size="large" color="#007BFF" style={{ marginTop: 50 }} />
+                        ) : error ? (
+                            <ErrorPlaceholder />
+
+                        ) : lastSearchedCity == "" && !weather ? (
+
+                            <WeatherPlaceHolder />
+
+                        ) : (
+                            <>
+                                {weather && <WeatherCardReport weather={weather} />}
+
+                            </>
+                        )}
+                    </View>
+
+                </View>
+            </View >
+        </ImageBackground>
     )
 }

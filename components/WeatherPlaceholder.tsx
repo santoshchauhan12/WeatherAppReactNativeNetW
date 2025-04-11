@@ -1,21 +1,50 @@
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTheme } from "../hooks/ThemeContext";
 
 
 
 export const WeatherPlaceHolder = () => {
+    const { theme, toggleTheme } = useTheme();
+    const isDarkMode = theme === 'dark';
+
+    const styles = StyleSheet.create({
+
+        card: {
+            margin: 20,
+            padding: 25,
+            borderRadius: 20,
+            alignItems: 'center',
+        },
+
+        title: {
+            color: isDarkMode ? "white" : "black",
+            alignSelf: "center",
+            fontSize: 22,
+            fontWeight: "600"
+        },
+
+        description: {
+            color: isDarkMode ? "white" : "black",
+            alignSelf: "center",
+            fontSize: 22,
+            fontWeight: "600",
+            textAlign: "center"
+        }
+    })
+
 
     return (
 
         <View style={styles.card}>
-            <Text style={styles.title}>Current location not found</Text>
+            <Text style={styles.title}> Current location not found</Text>
 
-             <MaterialCommunityIcons
-                    name= "cloud-search" 
-                    size={150}
-                    color="#fff"
-                  />
+            <MaterialCommunityIcons
+                name="cloud-search"
+                size={150}
+                color="#fff"
+            />
 
             <Text style={styles.description}>Search above to get your weather report</Text>
         </View>
@@ -23,39 +52,3 @@ export const WeatherPlaceHolder = () => {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-const styles = StyleSheet.create({
-
-    card: {
-        margin: 20,
-        padding: 25,
-        borderRadius: 20,
-        alignItems: 'center',
-      },
-    container: {
-        alignSelf: "center",
-        justifyContent: "center",
-        padding: 20,
-        backgroundColor: "blue",
-        flexDirection: "column"
-    },
-
-    title: {
-        color: "Black",
-        alignSelf: "center"
-    },
-
-    description: {
-        color: "Black",
-        alignSelf: "center"
-    }
-})
