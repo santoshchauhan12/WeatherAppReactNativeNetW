@@ -1,12 +1,10 @@
 
-
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { WeatherState } from '../states/WeatherState';
 import { WeatherResponse } from '../models/WeatherModel';
 import { getWeatherCardColor, getWeatherIcon } from '../helpers/weatherHelper';
 import { useTheme } from '../hooks/ThemeContext';
-import { isDraft } from '@reduxjs/toolkit';
 
 type Props = {
     weather: WeatherResponse;
@@ -18,7 +16,7 @@ type Props = {
    * @returns 
    */
 export const WeatherCardReport: React.FC<Props> = ( {weather}) => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
       const isDarkMode = theme === 'dark';
   const weatherMain = weather?.weather?.[0]?.main?.toLowerCase();
   const iconName = getWeatherIcon(weatherMain);

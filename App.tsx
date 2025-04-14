@@ -5,41 +5,24 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
-import type { PropsWithChildren } from 'react';
+import React from 'react';
 import {
-  ScrollView,
-  StatusBar,
+  SafeAreaView,
   StyleSheet,
-  Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, weatherStore } from './Store/WeatherStore';
-import { RootState } from './Store/WeatherStore';
-import { fetchWeatherData } from './redux/FetchWeatherSlice';
+
+
+import { Provider } from 'react-redux';
+import { weatherStore } from './Store/WeatherStore';
 import { HomePage } from './components/HomePage';
 import { ThemeProvider } from './hooks/ThemeContext';
+import { NetworkProvider } from './hooks/NetworkContext';
 
 
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
 
 
@@ -53,25 +36,32 @@ function App(): React.JSX.Element {
    * You can read more about it here:
    * https://github.com/react-native-community/discussions-and-proposals/discussions/827
    */
-  const safePadding = '5%';
 
   return (
 
-    <Provider store={weatherStore} >
-      <ThemeProvider>
-        <View style={styles.appContainer}>
-            <HomePage />
-        </View>
-      </ThemeProvider>
-    </Provider>
+
+
+    <NetworkProvider>
+      <Provider store={weatherStore} >
+        <ThemeProvider>
+          <SafeAreaView style={styles.safeAreaContainer}>
+            <View style={styles.appContainer}>
+              <HomePage />
+            </View>
+          </SafeAreaView>
+        </ThemeProvider>
+      </Provider>
+    </NetworkProvider>
   );
 }
 
 const styles = StyleSheet.create({
 
+  safeAreaContainer: {
+    flex: 1
+  },
   appContainer: {
     flex: 1,
-    backgroundColor: "green"
   },
   sectionContainer: {
     marginTop: 32,

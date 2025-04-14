@@ -8,7 +8,6 @@ import { weatherInitialState } from "../states/WeatherState";
 import { ResponseState } from "../states/WeatherState";
 import { WEATHER_API_KEY } from '@env';
 
-
 /**
  * Thunk middleware and axios to call api,
  * @param search based on city
@@ -26,13 +25,8 @@ export const fetchWeatherData = createAsyncThunk("async/state",
                 }
             })
             const responseData = await result.data
-
-            console.log("response is ============= ", responseData)
             return responseData
         }catch(error: unknown) {
-            console.log("response is on error ======= ", error)
-
-
             if(axios.isAxiosError(error)) {
                 return rejectWithValue(error.message)
             } else {

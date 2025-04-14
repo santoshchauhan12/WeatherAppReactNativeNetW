@@ -1,34 +1,29 @@
-import { AppDispatch, weatherStore } from '../Store/WeatherStore';
+import { AppDispatch } from '../Store/WeatherStore';
 import { RootState } from '../Store/WeatherStore';
 import { fetchWeatherData } from '../redux/FetchWeatherSlice';
-import React, { useEffect, Dispatch, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from '../hooks/ThemeContext';
 import { ImageBackground, Switch } from 'react-native';
 
 
 import {
     ActivityIndicator,
-    Image,
-    ScrollView,
-    StatusBar,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
-    useColorScheme,
     View,
 } from 'react-native';
 import { ResponseState } from '../states/WeatherState';
-import { getGradientForWeatherBackground, getWeatherIcon } from '../helpers/weatherHelper';
 import { WeatherCardReport } from './WeatherCardReport';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LAST_SEARCHED_CITY } from '../const/StorageConstants';
 import { ErrorPlaceholder } from './ErrorPlaceholder';
 import { WeatherPlaceHolder } from './WeatherPlaceholder';
+import { useNetwork } from '../hooks/NetworkContext';
+import { NetworkUnAvailable } from './NetworkUnAvailable';
 
 
 
@@ -41,12 +36,13 @@ export const HomePage = () => {
     const [searchInput, setSearchInput] = useState("")
     const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [lastSearchedCity, setLastSearchedCity] = useState('');
+    const { isConnected } = useNetwork();
 
     const backgroundImage = isDarkMode
         ? require('../assets/dark_mode_bg.jpg')
         : require('../assets/light_mode_bg.jpg');
 
-        
+
     function onInputChange(value: string) {
         setSearchInput(value)
     }
@@ -93,7 +89,19 @@ export const HomePage = () => {
         getLastSearchedCity();
     }, []);
 
-    const weatherMain = weather?.weather?.[0]?.main?.toLowerCase();
+    /**
+     * Trigger network call on network connected only
+     */
+
+    useEffect(() => {
+        if (isConnected) {
+            weatherDispatch(fetchWeatherData(lastSearchedCity));
+        }
+      }, [isConnected]);
+
+
+
+
 
     const styles = StyleSheet.create({
         mainContainer: {
@@ -145,8 +153,8 @@ export const HomePage = () => {
         rightControls: {
             flexDirection: 'row',
             alignItems: 'center',
-            gap: 12, 
-          },
+            gap: 12,
+        },
 
         input: {
             height: 40,
@@ -186,25 +194,28 @@ export const HomePage = () => {
                             />
                         </View>
                     )}
-                    <View style={styles.container}>
+                    {!isConnected && <NetworkUnAvailable />}
+                    {isConnected &&
+                        <View style={styles.container}>
 
 
-                        {status === ResponseState.Loading ? (
-                            <ActivityIndicator size="large" color="#007BFF" style={{ marginTop: 50 }} />
-                        ) : error ? (
-                            <ErrorPlaceholder />
+                            {status === ResponseState.Loading ? (
+                                <ActivityIndicator size="large" color="#007BFF" style={{ marginTop: 50 }} />
+                            ) : error ? (
+                                <ErrorPlaceholder />
 
-                        ) : lastSearchedCity == "" && !weather ? (
+                            ) : lastSearchedCity == "" && !weather ? (
 
-                            <WeatherPlaceHolder />
+                                <WeatherPlaceHolder />
 
-                        ) : (
-                            <>
-                                {weather && <WeatherCardReport weather={weather} />}
+                            ) : (
+                                <>
+                                    {weather && <WeatherCardReport weather={weather} />}
 
-                            </>
-                        )}
-                    </View>
+                                </>
+                            )}
+                        </View>
+                    }
 
                 </View>
             </View >

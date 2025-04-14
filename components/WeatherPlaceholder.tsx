@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTheme } from "../hooks/ThemeContext";
-
+import React from 'react';
 
 
 export const WeatherPlaceHolder = () => {
-    const { theme, toggleTheme } = useTheme();
+    const { theme } = useTheme();
     const isDarkMode = theme === 'dark';
 
     const styles = StyleSheet.create({

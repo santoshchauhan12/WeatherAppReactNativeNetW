@@ -1,9 +1,6 @@
 
-import reducer from "../redux/FetchWeatherSlice";
 import axios from "axios";
-import { weatherInitialState } from "../states/WeatherState";
 import { ResponseState } from "../states/WeatherState";
-import { AnyAction } from "@reduxjs/toolkit";
 import { fetchWeatherData } from "../redux/FetchWeatherSlice";
 import { weatherStore } from "../Store/WeatherStore";
 
