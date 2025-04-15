@@ -37,11 +37,13 @@ Architecture Explanation:-
 - Use context api for storing and getting themes, styling and colors.
 - Used conext api for network state storing, listening and fetching.
 - Created a base api for placing apis.
-- Used Redux toolkit and Store for global api call, reducer and  managing the state of weather report.
+- Used Redux toolkit , thunk, Store for global api call, reducer and  managing the state of weather report.
 - Slice, thunk and Response model types are segragated into feature module.
 - Use Eslint for clean code and performance.
 - Used env for keeping the api keys.
 - Custom hooks are used for fetching the weather state, theme state.
+- useEffects has been used for trigger api calls.
+- useSelector has been used for fetching weather response state from the store.
 - Jest and @testing-library/react-native is used for testing
 
 
