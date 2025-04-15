@@ -13,6 +13,7 @@ Run the Android build using below command on emulator:-
 To successfully create the debug apk :- 
 
 - npm run build:debug
+  
 (this will generate a app-debug.apk folder inside android/app/build/output/debug folder)
 
 
