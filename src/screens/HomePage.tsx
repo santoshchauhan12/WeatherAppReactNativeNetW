@@ -34,7 +34,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { RootState } from 'src/redux/store';
 
 
-export const HomePage = () => {
+export const HomePage: React.FC = () => {
     const { theme, toggleTheme, themedStyles } = useTheme();
     const isDarkMode = theme === 'dark';
 
@@ -59,7 +59,7 @@ export const HomePage = () => {
      * Save searched city to storage to persist even after app closing
      * @param searchCity 
      */
-    const saveSearchedCity = async (searchCity: string) => {
+    const saveSearchedCity = async (searchCity: string): Promise<void> => {
         await AsyncStorage.setItem(LAST_SEARCHED_CITY, searchCity);
     }
 
@@ -87,7 +87,7 @@ export const HomePage = () => {
      * Fetch last city search from async storage
      */
     useEffect(() => {
-        const getLastSearchedCity = async () => {
+        const getLastSearchedCity = async (): Promise<void> => {
             const city = await AsyncStorage.getItem(LAST_SEARCHED_CITY);
             if (city) {
                 setLastSearchedCity(city);

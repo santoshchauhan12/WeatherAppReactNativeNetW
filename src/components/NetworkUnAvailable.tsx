@@ -3,7 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useTheme } from "../styles/theme/context/ThemeContext";
 
 
-export const NetworkUnAvailable = () => {
+export const NetworkUnAvailable: React.FC = () => {
 
     const { themedStyles } = useTheme();
    
