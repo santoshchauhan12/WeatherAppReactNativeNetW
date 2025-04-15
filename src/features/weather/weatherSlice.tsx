@@ -18,7 +18,7 @@ const weatherSlice = createSlice({
       })
       .addCase(fetchWeatherData.rejected, (state, action) => {
         state.status = ResponseState.Failed;
-        state.error = action.payload as string;
+        state.error = action.payload ?? "Something went wrong";
       });
   },
 });
