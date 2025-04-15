@@ -25,8 +25,6 @@ describe("Weather Slice", () => {
 
     it("should handle fulfilled state", async () => {
         mockedAxios.get.mockResolvedValueOnce({ data: mockWeatherResponse });
-
-        const action = await fetchWeatherData("Manali, Himachal Pradesh")(jest.fn, jest.fn, undefined);
         const state = reducer(weatherInitialState, { type: fetchWeatherData.fulfilled.type, payload: mockWeatherResponse });
 
         expect(state.status).toBe(ResponseState.Success);
@@ -36,8 +34,6 @@ describe("Weather Slice", () => {
 
     it("should failed for  fulfilled state for empty check response", async () => {
         mockedAxios.get.mockResolvedValueOnce({ data: mockWeatherResponse });
-
-        const action = await fetchWeatherData("Manali, Himachal Pradesh")(jest.fn, jest.fn, undefined);
         const state = reducer(weatherInitialState, { type: fetchWeatherData.fulfilled.type });
 
         expect(state.status).toBe(ResponseState.Success);
