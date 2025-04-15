@@ -1,8 +1,8 @@
 
 import axios from "axios";
-import { ResponseState } from "../states/WeatherState";
-import { fetchWeatherData } from "../redux/FetchWeatherSlice";
-import { weatherStore } from "../Store/WeatherStore";
+import { ResponseState } from "../src/features/weather/weatherState";
+import { fetchWeatherData } from "../src/features/weather/weatherThunk";
+import { store } from "../src/redux/store";
 
 // Mock axios
 jest.mock("axios");
@@ -20,7 +20,7 @@ describe("weatherStore",  () => {
 
     it("verify default initial state", () => {
 
-        const state = weatherStore.getState().weatherReducerState;
+        const state = store.getState().weather;
 
         expect(state.status).toBe(ResponseState.Idle)
         expect(state.weather).toEqual(null)
@@ -31,8 +31,8 @@ describe("weatherStore",  () => {
 
         mockedAxios.get.mockResolvedValueOnce({data: mockWeatherResponse});
 
-        await weatherStore.dispatch(fetchWeatherData("Manali"))
-        const state = weatherStore.getState().weatherReducerState;
+        await store.dispatch(fetchWeatherData("Manali"))
+        const state = store.getState().weather;
 
         expect(state.status).toBe(ResponseState.Success)
         expect(state.weather).toEqual(mockWeatherResponse)
@@ -43,9 +43,9 @@ describe("weatherStore",  () => {
     it("verify if fetchWeather Data api fails", async () => {
         mockedAxios.get.mockRejectedValueOnce(new Error("API failure"));
 
-        await weatherStore.dispatch(fetchWeatherData("fjdsfjdslj"));
+        await store.dispatch(fetchWeatherData("fjdsfjdslj"));
 
-        const state = weatherStore.getState().weatherReducerState;
+        const state = store.getState().weather;
         expect(state.status).toBe(ResponseState.Failed);
         expect(state.error).toBe("unknown error");
     });

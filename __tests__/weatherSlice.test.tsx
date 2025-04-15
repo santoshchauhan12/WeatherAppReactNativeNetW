@@ -1,10 +1,10 @@
 
-import reducer from "../redux/FetchWeatherSlice";
+import reducer from "../src/features/weather/weatherSlice";
 import axios from "axios";
-import { weatherInitialState } from "../states/WeatherState";
-import { ResponseState } from "../states/WeatherState";
+import { weatherInitialState } from "../src/features/weather/weatherState";
+import { ResponseState } from "../src/features/weather/weatherState";
 import { AnyAction } from "@reduxjs/toolkit";
-import { fetchWeatherData } from "../redux/FetchWeatherSlice";
+import { fetchWeatherData } from "../src/features/weather/weatherThunk";
 
 // Mock axios
 jest.mock("axios");
