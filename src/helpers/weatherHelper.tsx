@@ -1,4 +1,6 @@
-import { useTheme } from "../hooks/ThemeContext";
+import { useTheme } from "../styles/theme/context/ThemeContext";
+
+
 
 /**
  * helper function to get different color based on the weather 
@@ -7,7 +9,7 @@ import { useTheme } from "../hooks/ThemeContext";
  */
 export const getWeatherCardColor = (weatherMain: string | undefined) => {
 
-    const { theme, toggleTheme } = useTheme();
+    const { theme } = useTheme();
     const isDarkMode = theme === 'dark';
 
     switch (weatherMain) {

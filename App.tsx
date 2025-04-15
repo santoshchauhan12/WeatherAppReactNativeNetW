@@ -15,8 +15,8 @@ import {
 
 
 import { Provider } from 'react-redux';
-import { weatherStore } from './src/Store/WeatherStore';
-import { HomePage } from './src/components/HomePage';
+import { store } from './src/redux/store';
+import { HomePage } from './src/screens/HomePage'
 import {ThemeProvider} from './src/styles/theme/context/ThemeContext'
 
 import { NetworkProvider } from './src/hooks/NetworkContext';
@@ -43,7 +43,7 @@ function App(): React.JSX.Element {
 
 
     <NetworkProvider>
-      <Provider store={weatherStore} >
+      <Provider store={store} >
         <ThemeProvider>
           <SafeAreaView style={styles.safeAreaContainer}>
             <View style={styles.appContainer}>

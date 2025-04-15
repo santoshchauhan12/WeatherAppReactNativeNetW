@@ -1,15 +1,15 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
-  "include": ["@Types/env.d.ts", "src/**/*", "src/helpers", "src/components", "src/redux"],
+  "include": ["Types/env.d.ts", "src/**/*", "src/helpers", "src/components", "src/redux"],
   "compilerOptions": {
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@env": ["@Types/env.d.ts"],
+      "@env": ["Types/env.d.ts"],
     },
-   "typeRoots": ["./node_modules/@types", "@Types"], // <- add this
+   "typeRoots": ["./node_modules/@types", "Types"], // <- add this
     "types": ["react-native", "jest"]
   }
 }

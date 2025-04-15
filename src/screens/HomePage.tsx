@@ -1,15 +1,10 @@
-import { AppDispatch } from '../Store/WeatherStore';
-import { RootState } from '../Store/WeatherStore';
-import { fetchWeatherData } from '../redux/FetchWeatherSlice';
 import {
     useEffect,
     useState,
     useRef
 } from 'react';
-import {
-    useDispatch,
-    useSelector
-} from 'react-redux';
+
+import { fetchWeatherData } from '../features/weather/weatherThunk';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {
     useTheme
@@ -27,7 +22,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import { ResponseState } from '../states/WeatherState';
+import { ResponseState } from '../features/weather/weatherState';
 import { WeatherCardReport } from '../components/WeatherCardReport';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LAST_SEARCHED_CITY } from '../const/StorageConstants';
@@ -35,13 +30,16 @@ import { ErrorPlaceholder } from '../components/ErrorPlaceholder';
 import { WeatherPlaceHolder } from '../components/WeatherPlaceholder';
 import { useNetwork } from '../hooks/NetworkContext';
 import { NetworkUnAvailable } from '../components/NetworkUnAvailable';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { RootState } from 'src/redux/store';
 
 
 export const HomePage = () => {
     const { theme, toggleTheme, themedStyles } = useTheme();
     const isDarkMode = theme === 'dark';
-    const weatherDispatch = useDispatch<AppDispatch>()
-    const { weather, status, error } = useSelector((state: RootState) => state.weatherReducerState)
+
+    const weatherDispatch = useAppDispatch();
+    const { weather, status, error } = useAppSelector((state: RootState) => state.weather);
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchInput, setSearchInput] = useState("")
     const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
