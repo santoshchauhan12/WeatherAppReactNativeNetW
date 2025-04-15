@@ -45,6 +45,7 @@ Architecture Explanation:-
 - useEffects has been used for trigger api calls.
 - useSelector has been used for fetching weather response state from the store.
 - Jest and @testing-library/react-native is used for testing
+- Added build script for creating generic build for ios and android. Right now only supported for Android debug and prod.
 
 
 ![WhatsApp Image 2025-04-11 at 4 32 26 PM](https://github.com/user-attachments/assets/0446d0e5-d2e9-4667-9b6a-e17abf8fbc79)
