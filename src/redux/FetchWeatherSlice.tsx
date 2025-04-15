@@ -4,8 +4,8 @@ import { createAsyncThunk,
 
 import axios from "axios";
 import { GET_WEATHER_API } from "../const/ApiConstant";
-import { weatherInitialState } from "../states/WeatherState";
-import { ResponseState } from "../states/WeatherState";
+import { weatherInitialState } from "../../src/states/WeatherState";
+import { ResponseState } from "../../src/states/WeatherState";
 import { WEATHER_API_KEY } from '@env';
 
 /**

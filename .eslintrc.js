@@ -19,6 +19,7 @@ module.exports = {
   },
   rules: {
     'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-unused-vars': ['warn'],
     'unused-imports/no-unused-imports': 'error',
     'unused-imports/no-unused-vars': [

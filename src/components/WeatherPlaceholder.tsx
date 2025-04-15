@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useTheme } from "../hooks/ThemeContext";
-import React from 'react';
+import { useTheme } from "../styles/theme/context/ThemeContext";
 
 
 export const WeatherPlaceHolder = () => {
-    const { theme } = useTheme();
-    const isDarkMode = theme === 'dark';
+   
+    const { theme, themedStyles } = useTheme();
+             const isDarkMode = theme === 'dark';
 
     const styles = StyleSheet.create({
 
@@ -36,8 +36,8 @@ export const WeatherPlaceHolder = () => {
 
     return (
 
-        <View style={styles.card}>
-            <Text style={styles.title}> Current location not found</Text>
+        <View style={themedStyles.placeHolderCard}>
+            <Text style={themedStyles.placeHolderTitle}> Current location not found</Text>
 
             <MaterialCommunityIcons
                 name="cloud-search"
@@ -45,7 +45,7 @@ export const WeatherPlaceHolder = () => {
                 color="#fff"
             />
 
-            <Text style={styles.description}>Search above to get your weather report</Text>
+            <Text style={themedStyles.placeHolderDescription}>Search above to get your weather report</Text>
         </View>
     )
 }

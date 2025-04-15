@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useTheme } from "../hooks/ThemeContext";
-import React from 'react';
+import { useTheme } from "../styles/theme/context/ThemeContext";
 
 
-export const ErrorPlaceholder = () => {
-    const { theme } = useTheme();
+export const NetworkUnAvailable = () => {
+
+    const { theme, themedStyles } = useTheme();
     const isDarkMode = theme === 'dark';
 
     const styles = StyleSheet.create({
@@ -34,10 +35,7 @@ export const ErrorPlaceholder = () => {
 
     return (
 
-        <View style={styles.card}>
-            <Text style={styles.title}>City name not found</Text>
-
-
+        <View style={themedStyles.placeHolderCard}>
 
             <MaterialCommunityIcons
                 name="sync-alert"
@@ -45,7 +43,7 @@ export const ErrorPlaceholder = () => {
                 color="#fff"
             />
 
-            <Text style={styles.description}>Enter city again</Text>
+            <Text style={themedStyles.placeHolderDescription}>Turn-ON your Internet.</Text>
         </View>
     )
 }

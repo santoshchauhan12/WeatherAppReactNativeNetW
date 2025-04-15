@@ -1,4 +1,3 @@
-// src/context/NetworkContext.tsx
 
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import NetInfo from '@react-native-community/netinfo';
@@ -8,7 +7,7 @@ type NetworkContextType = {
 };
 
 const NetworkContext = createContext<NetworkContextType>({
-  isConnected: true, // default to true
+  isConnected: true, 
 });
 
 export const NetworkProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

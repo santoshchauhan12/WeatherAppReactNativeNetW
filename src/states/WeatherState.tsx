@@ -1,4 +1,4 @@
-import { WeatherResponse } from "../models/WeatherModel"
+import { WeatherResponse } from "src/models/WeatherModel"
 
 
 export type WeatherState = {

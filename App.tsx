@@ -15,10 +15,11 @@ import {
 
 
 import { Provider } from 'react-redux';
-import { weatherStore } from './Store/WeatherStore';
-import { HomePage } from './components/HomePage';
-import { ThemeProvider } from './hooks/ThemeContext';
-import { NetworkProvider } from './hooks/NetworkContext';
+import { weatherStore } from './src/Store/WeatherStore';
+import { HomePage } from './src/components/HomePage';
+import {ThemeProvider} from './src/styles/theme/context/ThemeContext'
+
+import { NetworkProvider } from './src/hooks/NetworkContext';
 
 
 

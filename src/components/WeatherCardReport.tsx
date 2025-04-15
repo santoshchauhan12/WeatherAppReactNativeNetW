@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { WeatherResponse } from '../models/WeatherModel';
 import { getWeatherCardColor, getWeatherIcon } from '../helpers/weatherHelper';
-import { useTheme } from '../hooks/ThemeContext';
+import { useTheme } from "../styles/theme/context/ThemeContext";
 
 type Props = {
     weather: WeatherResponse;
@@ -16,7 +16,7 @@ type Props = {
    * @returns 
    */
 export const WeatherCardReport: React.FC<Props> = ( {weather}) => {
-  const { theme } = useTheme();
+  const { theme, themedStyles } = useTheme();
       const isDarkMode = theme === 'dark';
   const weatherMain = weather?.weather?.[0]?.main?.toLowerCase();
   const iconName = getWeatherIcon(weatherMain);
@@ -60,21 +60,21 @@ export const WeatherCardReport: React.FC<Props> = ( {weather}) => {
 
 
   return (
-    <View style={[styles.card, { backgroundColor }]}>
-      <Text style={styles.cityText}>{weather.name}</Text>
+    <View style={[themedStyles.card, { backgroundColor }]}>
+      <Text style={themedStyles.cityText}>{weather.name}</Text>
 
       <MaterialCommunityIcons
         name={iconName}
         size={150}
         color="#fff"
-        style={styles.weatherImage}
+        style={themedStyles.weatherImage}
       />
 
-      <Text style={styles.weatherMainText}>
+      <Text style={themedStyles.weatherMainText}>
         {weather?.weather?.[0]?.main}
       </Text>
 
-      <Text style={styles.tempText}>
+      <Text style={themedStyles.tempText}>
         {weather.main?.temp ? `${Math.round(weather.main.temp - 273.15)}°C` : ""}
       </Text>
     </View>
