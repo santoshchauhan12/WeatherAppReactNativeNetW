@@ -8,7 +8,6 @@
 import React from 'react';
 import {
   SafeAreaView,
-  StyleSheet,
   View,
 } from 'react-native';
 
@@ -17,7 +16,7 @@ import {
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
 import { HomePage } from './src/screens/HomePage'
-import {ThemeProvider} from './src/styles/theme/context/ThemeContext'
+import {ThemeProvider, useTheme} from './src/styles/theme/context/ThemeContext'
 
 import { NetworkProvider } from './src/hooks/NetworkContext';
 
@@ -25,28 +24,15 @@ import { NetworkProvider } from './src/hooks/NetworkContext';
 
 function App(): React.JSX.Element {
 
-
-
-
-  /*
-   * To keep the template simple and small we're adding padding to prevent view
-   * from rendering under the System UI.
-   * For bigger apps the recommendation is to use `react-native-safe-area-context`:
-   * https://github.com/AppAndFlow/react-native-safe-area-context
-   *
-   * You can read more about it here:
-   * https://github.com/react-native-community/discussions-and-proposals/discussions/827
-   */
+  const { themedStyles } = useTheme();
 
   return (
-
-
 
     <NetworkProvider>
       <Provider store={store} >
         <ThemeProvider>
-          <SafeAreaView style={styles.safeAreaContainer}>
-            <View style={styles.appContainer}>
+          <SafeAreaView style={themedStyles.flex1}>
+            <View style={themedStyles.flex1}>
               <HomePage />
             </View>
           </SafeAreaView>
@@ -55,32 +41,6 @@ function App(): React.JSX.Element {
     </NetworkProvider>
   );
 }
-
-const styles = StyleSheet.create({
-
-  safeAreaContainer: {
-    flex: 1
-  },
-  appContainer: {
-    flex: 1,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 
 export default App;

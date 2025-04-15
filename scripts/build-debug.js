@@ -1,5 +1,6 @@
-const { execSync } = require("child_process");
-const os = require("os");
+import { execSync } from "child_process";
+
+import * as os from 'os';
 
 const IS_WINDOWS = os.platform() === "win32";
 const gradleCommand = IS_WINDOWS ? "gradlew.bat" : "./gradlew";
